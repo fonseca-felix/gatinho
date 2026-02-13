@@ -1,0 +1,119 @@
+/* --- ESTÉTICA SOMBRIA & VOID --- */
+
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #050505;
+    background-image: radial-gradient(circle at 50% 50%, #1a000a 0%, #050505 85%);
+    color: #e0e0e0;
+    font-family: 'Courier New', Courier, monospace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    cursor: none; /* Remove o cursor padrão */
+}
+
+/* Cursor customizado da Lua */
+#lua-cursor {
+    position: fixed;
+    pointer-events: none; /* Deixa cliques passarem através dela */
+    z-index: 9999;
+    color: #ff0044;
+    font-size: 1.8rem;
+    text-shadow: 0 0 15px #ff0044;
+    user-select: none;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease-out;
+}
+
+#canvas-yarn {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.container {
+    position: relative;
+    z-index: 10;
+    background: rgba(8, 8, 8, 0.96);
+    padding: 40px;
+    border: 1px solid #1a1a1a;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 1);
+    text-align: center;
+    width: 380px;
+    backdrop-filter: blur(10px);
+    border-radius: 2px;
+}
+
+h1 { 
+    font-size: 1rem; 
+    letter-spacing: 6px; 
+    text-transform: uppercase;
+    color: #ff0044;
+    text-shadow: 0 0 10px rgba(255, 0, 68, 0.4);
+    margin-bottom: 30px;
+}
+
+input[type="text"] {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #333;
+    color: #ff0044;
+    padding: 12px;
+    width: 90%;
+    margin-bottom: 25px;
+    outline: none;
+    text-align: center;
+    letter-spacing: 2px;
+    cursor: none; /* Mantém a lua como cursor */
+}
+
+button {
+    background: transparent;
+    color: #ff0044;
+    border: 1px solid #ff0044;
+    padding: 10px 30px;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    letter-spacing: 4px;
+    cursor: none; /* Mantém a lua como cursor */
+    transition: 0.4s ease;
+}
+
+button:hover {
+    background: #ff0044;
+    color: #000;
+    box-shadow: 0 0 25px #ff0044;
+}
+
+.cat-card { 
+    margin-top: 30px;
+    animation: fadeIn 1.5s ease;
+}
+
+.cat-img {
+    width: 280px;
+    height: 280px;
+    object-fit: cover;
+    filter: grayscale(100%) brightness(0.6) contrast(120%);
+    border: 1px solid #222;
+    transition: 0.6s ease-in-out;
+}
+
+.cat-img:hover {
+    filter: grayscale(0%) brightness(1) contrast(100%);
+    border-color: #ff0044;
+    transform: scale(1.02);
+}
+
+.flash { color: #555; font-size: 0.7rem; margin-bottom: 15px; }
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}

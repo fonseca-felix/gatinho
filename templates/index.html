@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Void Cat Finder</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" href="../static/img/icone-gatinho.webp" type="image/png">
+</head>
+<body>
+    <div id="lua-cursor">☾</div>
+    
+    <canvas id="canvas-yarn"></canvas>
+
+    <div class="container" id="main-ui">
+        <h1>Void Cat ⩇⩇:⩇⩇</h1>
+
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            {% for message in messages %}
+              <div class="flash">// {{ message }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <form action="/cat" method="POST">
+            <input type="text" name="nome" placeholder="NOMEIE O VAZIO" required autocomplete="off">
+            <br>
+            <button type="submit">INVOCAR</button>
+        </form>
+
+        {% if url_imagem %}
+        <div class="cat-card">
+            <p style="font-size: 0.6rem; color:#444; letter-spacing: 3px;">ENTIDADE: {{ nome }}</p>
+            <img src="{{ url_imagem }}" class="cat-img">
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        const canvas = document.getElementById('canvas-yarn');
+        const ctx = canvas.getContext('2d');
+        const ui = document.getElementById('main-ui');
+        const lua = document.getElementById('lua-cursor');
+        
+        let mouse = { x: window.innerWidth / 4, y: window.innerHeight / 4 };
+        let ball = { x: 0, y: 0, radius: 22 };
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('mousemove', (e) => {
+            // Atualiza posição da Lua (Cursor)
+            lua.style.left = e.clientX + 'px';
+            lua.style.top = e.clientY + 'px';
+
+            const rect = ui.getBoundingClientRect();
+            // A bolinha de lã segue o mouse apenas fora da interface principal
+            if (e.x < rect.left || e.x > rect.right || e.y < rect.top || e.y > rect.bottom) {
+                mouse.x = e.x;
+                mouse.y = e.y;
+            }
+        });
+
+        // Feedback visual da Lua ao clicar
+        window.addEventListener('mousedown', () => {
+            lua.style.transform = 'translate(-50%, -50%) scale(0.7)';
+        });
+        window.addEventListener('mouseup', () => {
+            lua.style.transform = 'translate(-50%, -50%) scale(1)';
+        });
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            ball.x += (mouse.x - ball.x) * 0.06;
+            ball.y += (mouse.y - ball.y) * 0.06;
+
+            ctx.beginPath();
+            ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+            ctx.fillStyle = '#660011'; 
+            ctx.shadowBlur = 25;
+            ctx.shadowColor = '#ff0033';
+            ctx.fill();
+
+            ctx.strokeStyle = '#220005';
+            ctx.lineWidth = 1;
+            for(let i=0; i<4; i++) {
+                ctx.beginPath();
+                ctx.arc(ball.x + (i*2), ball.y - (i*2), ball.radius - 4, 0, Math.PI);
+                ctx.stroke();
+            }
+            
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+        animate();
+    </script>
+</body>
+</html>
